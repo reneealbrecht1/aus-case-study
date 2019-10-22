@@ -1,0 +1,24 @@
+---
+title: "aus-case-study"
+author: "Renee Albrecht"
+date: "October 21, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+# Load packages
+library(tidyverse) # for general data wrangling and plotting
+library(furrr) # for parallel operations on lists
+library(lubridate) # for working with dates
+#library(sf) # for vector data 
+library(raster) # for working with rasters
+library(maps) # additional helpful mapping packages
+library(maptools)
+library(rgeos)
+```
+
