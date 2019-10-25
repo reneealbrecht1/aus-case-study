@@ -15,10 +15,12 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse) # for general data wrangling and plotting
 library(furrr) # for parallel operations on lists
 library(lubridate) # for working with dates
-#library(sf) # for vector data 
+library(sf) # for vector data 
 library(raster) # for working with rasters
 library(maps) # additional helpful mapping packages
 library(maptools)
 library(rgeos)
-```
 
+#JKM fixed my SF!! Upadted all packages 
+
+```
