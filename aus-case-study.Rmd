@@ -21,6 +21,61 @@ library(maps) # additional helpful mapping packages
 library(maptools)
 library(rgeos)
 
-#JKM fixed my SF!! Upadted all packages 
+```
+
+
+```{r}
+#Load Shapefiles
+
+# World polygons from the maps package
+world_shp <- sf::st_as_sf(maps::map("world", plot = FALSE, fill = TRUE))
+
+#load coral sea downgrade polygon 
+#cs_dg <- read_sf('~RA_PADDD_final/') 
+ 
 
 ```
+
+```{r}
+## Import Data##
+
+# Specify location of data directory
+data_dir <- '~fishing_effort/'
+
+#Import Data
+# Create dataframe of filenames dates and filter to date range of interest
+
+effort_files <- tibble(
+  file = list.files(paste0(data_dir, 'daily_csvs'), 
+                    pattern = '.csv', recursive = T, full.names = T),
+  date = ymd(str_extract(file, pattern = '[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}')))
+
+
+```
+
+```{r}
+# Generate a vector of dates of interest using ymd from lubridate
+effort_dates <- seq(ymd('2016-01-01'), ymd('2016-12-31'), by='months')
+
+# Filter to files within our date range of interest
+effort_files <- filter(effort_files, date %in% effort_dates)
+
+```
+
+```{r}
+# Read in data 
+
+plan(multisession) 
+effort_df <- furrr::future_map_dfr(effort_files$file, .f = read_csv)
+
+
+#Add date information
+effort_df <- effort_df %>%
+  mutate(year=year(date),
+         month=month(date))
+
+
+```
+
+
+
